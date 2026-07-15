@@ -32,7 +32,7 @@ import { CharacterPopupService } from '../../core/services/character-popup.servi
 
           <div class="character-img-wrap">
             <img
-              src="assets/characters/amelinha-ralphao.jpeg"
+              src="characters/amelinha-ralphao.jpeg"
               [class.show-amelinha]="popup.character === 'amelinha'"
               [class.show-ralphao]="popup.character === 'ralphao'"
               alt="{{ popup.character === 'ralphao' ? 'Ralphão' : 'Amélinha' }}"

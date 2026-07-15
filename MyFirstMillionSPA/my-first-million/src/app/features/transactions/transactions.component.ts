@@ -69,7 +69,31 @@ interface CategoryOption { id: number; name: string; icon: string; color: string
               <option value="BankTransfer">Transferência</option>
               <option value="Boleto">Boleto</option>
             </select>
+            @if (form.type === 'Expense') {
+              <select class="input" [(ngModel)]="form.installments">
+                <option [value]="1">À vista</option>
+                <option [value]="2">2x</option>
+                <option [value]="3">3x</option>
+                <option [value]="4">4x</option>
+                <option [value]="5">5x</option>
+                <option [value]="6">6x</option>
+                <option [value]="7">7x</option>
+                <option [value]="8">8x</option>
+                <option [value]="9">9x</option>
+                <option [value]="10">10x</option>
+                <option [value]="11">11x</option>
+                <option [value]="12">12x</option>
+                <option [value]="18">18x</option>
+                <option [value]="24">24x</option>
+              </select>
+            }
           </div>
+          @if (form.type === 'Expense' && form.installments > 1) {
+            <div class="installment-info">
+              <mat-icon>info_outline</mat-icon>
+              {{ form.installments }}x de {{ form.amount / form.installments | currency:'BRL':'symbol':'1.2-2' }} — serão criadas {{ form.installments }} transações mensais
+            </div>
+          }
           <input class="input" placeholder="Observações (opcional)" [(ngModel)]="form.notes" style="margin-top: 12px; width:100%; box-sizing:border-box" />
           <div class="form-actions">
             <button mat-button (click)="showForm.set(false)">Cancelar</button>
@@ -139,6 +163,8 @@ interface CategoryOption { id: number; name: string; icon: string; color: string
     .type-toggle button.active { background: var(--primary); color: white; }
     .form-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .input { padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-main); color: var(--text-primary); font-size: 14px; font-family: inherit; width: 100%; box-sizing: border-box; }
+    .installment-info { display: flex; align-items: center; gap: 6px; margin-top: 10px; padding: 10px 14px; background: #EFF6FF; border-radius: 8px; font-size: 13px; color: #1D4ED8; border: 1px solid #BFDBFE; }
+    .installment-info mat-icon { font-size: 18px; width: 18px; height: 18px; }
     .form-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 16px; }
 
     .filters { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -193,7 +219,8 @@ export class TransactionsComponent implements OnInit {
     accountId: 0,
     categoryId: 0,
     paymentMethod: 'Pix' as PaymentMethod,
-    notes: ''
+    notes: '',
+    installments: 1
   };
 
   years = [new Date().getFullYear(), new Date().getFullYear() - 1];
@@ -228,7 +255,7 @@ export class TransactionsComponent implements OnInit {
   }
 
   save() {
-    const { type, amount } = this.form;
+    const { type, amount, installments } = this.form;
     this.txSvc.create({
       accountId: this.form.accountId,
       categoryId: this.form.categoryId,
@@ -237,11 +264,13 @@ export class TransactionsComponent implements OnInit {
       date: this.form.date,
       description: this.form.description,
       notes: this.form.notes,
-      paymentMethod: this.form.paymentMethod
+      paymentMethod: this.form.paymentMethod,
+      totalInstallments: installments > 1 ? installments : undefined
     }).subscribe(() => {
       this.showForm.set(false);
+      this.form.installments = 1;
       this.load();
-      this.characterPopup.triggerForTransaction(type, amount);
+      this.characterPopup.triggerForTransaction(type, amount, amount >= 200 && type === 'Expense');
     });
   }
 

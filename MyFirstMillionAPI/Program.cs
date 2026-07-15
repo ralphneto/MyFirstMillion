@@ -11,6 +11,9 @@ using MyFirstMillionAPI.Infrastructure.Contexts;
 using Serilog;
 using System.Text;
 
+// Npgsql 6+ requires explicit UTC DateTimes; this allows unspecified Kind to work
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDataProtection()

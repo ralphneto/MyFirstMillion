@@ -156,29 +156,37 @@ public class TransactionsController : ControllerBase
             .FirstOrDefaultAsync(a => a.Id == dto.AccountId && a.UserId == userId);
         if (account == null) return BadRequest("Conta não encontrada.");
 
-        var transaction = new Transaction
-        {
-            UserId = userId,
-            AccountId = dto.AccountId,
-            CategoryId = dto.CategoryId,
-            Amount = dto.Amount,
-            Type = dto.Type,
-            Date = dto.Date,
-            Description = dto.Description,
-            Notes = dto.Notes,
-            Tags = dto.Tags,
-            PaymentMethod = dto.PaymentMethod,
-            InstallmentNumber = dto.InstallmentNumber,
-            TotalInstallments = dto.TotalInstallments
-        };
+        int installments = dto.TotalInstallments > 1 ? dto.TotalInstallments!.Value : 1;
+        decimal installmentAmount = Math.Round(dto.Amount / installments, 2);
 
-        // Update account balance
+        for (int i = 1; i <= installments; i++)
+        {
+            var transaction = new Transaction
+            {
+                UserId = userId,
+                AccountId = dto.AccountId,
+                CategoryId = dto.CategoryId,
+                Amount = installmentAmount,
+                Type = dto.Type,
+                Date = dto.Date.AddMonths(i - 1),
+                Description = installments > 1
+                    ? $"{dto.Description} ({i}/{installments})"
+                    : dto.Description,
+                Notes = dto.Notes,
+                Tags = dto.Tags,
+                PaymentMethod = dto.PaymentMethod,
+                InstallmentNumber = installments > 1 ? i : dto.InstallmentNumber,
+                TotalInstallments = installments > 1 ? installments : dto.TotalInstallments
+            };
+            _context.Transactions.Add(transaction);
+        }
+
+        // Update account balance by total amount
         account.Balance += dto.Type == TransactionType.Income ? dto.Amount : -dto.Amount;
 
-        _context.Transactions.Add(transaction);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetAll), new { }, transaction.Id);
+        return CreatedAtAction(nameof(GetAll), new { }, new { installments });
     }
 
     [HttpPut("{id}")]

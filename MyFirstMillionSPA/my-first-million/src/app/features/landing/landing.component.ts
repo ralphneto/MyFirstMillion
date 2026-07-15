@@ -32,7 +32,7 @@ import { MatIconModule } from '@angular/material/icon';
         </div>
         <div class="hero-visual">
           <img
-            src="assets/characters/ralphao-amelinha.jpeg"
+            src="characters/ralphao-amelinha.jpeg"
             alt="Ralphão, O Econômico e Amélinha, A Consumista"
             class="characters-img"
           />

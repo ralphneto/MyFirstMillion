@@ -14,6 +14,8 @@ public class Account
     public string Icon { get; set; } = "account_balance";
     public bool IsActive { get; set; } = true;
     public bool IncludeInTotal { get; set; } = true;
+    public decimal MonthlyFee { get; set; } = 0;
+    public int? BillingDueDay { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public User User { get; set; } = null!;
@@ -27,5 +29,9 @@ public enum AccountType
     Investment,
     Cash,
     CreditCard,
+    FoodCard,
+    MealCard,
+    TransportCard,
+    GiftCard,
     Other
 }

@@ -11,7 +11,6 @@ using MyFirstMillionAPI.Infrastructure.Security;
 
 namespace MyFirstMillionAPI.Controllers;
 
-[AllowAnonymous]
 [ApiController]
 [Route("api/auth")]
 public class AuthController : ControllerBase
@@ -27,6 +26,7 @@ public class AuthController : ControllerBase
         _jwt = jwt;
     }
 
+    [AllowAnonymous]
     [HttpPost("google")]
     public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequest request)
     {
@@ -61,6 +61,7 @@ public class AuthController : ControllerBase
         return Ok(new { token = _jwt.GenerateToken(user) });
     }
 
+    [AllowAnonymous]
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequest dto)
     {
@@ -80,6 +81,7 @@ public class AuthController : ControllerBase
         return Ok(new { token = _jwt.GenerateToken(user) });
     }
 
+    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest dto)
     {

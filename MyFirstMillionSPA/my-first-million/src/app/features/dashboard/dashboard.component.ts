@@ -19,7 +19,7 @@ import { Account } from '../../core/models/account.model';
     <div class="dashboard">
       <div class="page-header">
         <div>
-          <h1>Olá, {{ auth.user()?.name?.split(' ')[0] }}! 👋</h1>
+          <h1>Olá, {{ (auth.user()?.name?.split(' ') ?? [])[0] }}! 👋</h1>
           <p class="subtitle">Aqui está o resumo do seu mês</p>
         </div>
         <a mat-flat-button color="primary" routerLink="/app/transactions">

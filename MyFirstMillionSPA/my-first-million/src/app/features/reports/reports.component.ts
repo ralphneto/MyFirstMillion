@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CurrencyPipe, DecimalPipe, PercentPipe } from '@angular/common';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,7 +9,7 @@ import { TransactionSummary, MonthlyFlow } from '../../core/models/transaction.m
 @Component({
   selector: 'app-reports',
   standalone: true,
-  imports: [CurrencyPipe, DecimalPipe, PercentPipe, FormsModule, MatIconModule, MatButtonModule],
+  imports: [CurrencyPipe, DecimalPipe, FormsModule, MatIconModule, MatButtonModule],
   template: `
     <div class="reports-page">
       <div class="page-header">

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="MyFirstMillionAPI.Tests/MyFirstMillionAPI.Tests.csproj" />
+  <Project Path="MyFirstMillionAPI/MyFirstMillionAPI.csproj" />
+</Solution>

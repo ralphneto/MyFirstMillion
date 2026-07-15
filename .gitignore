@@ -1,0 +1,25 @@
+# .NET
+bin/
+obj/
+*.user
+.vs/
+appsettings.Development.json
+appsettings.Production.json
+logs/
+
+# EF migrations (keep migrations, ignore snapshots only if needed)
+# Uncomment to ignore: */Migrations/*.cs
+
+# Angular
+node_modules/
+dist/
+.angular/
+
+# Environment / secrets
+.env
+.env.deploy
+*.pem
+
+# OS
+.DS_Store
+Thumbs.db

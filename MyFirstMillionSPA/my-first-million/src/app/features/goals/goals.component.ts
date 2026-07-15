@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { GoalService } from '../../core/services/goal.service';
+import { CharacterPopupService } from '../../core/services/character-popup.service';
 import { FinancialGoal, InvestmentSuggestions } from '../../core/models/goal.model';
 
 @Component({
@@ -175,6 +176,7 @@ import { FinancialGoal, InvestmentSuggestions } from '../../core/models/goal.mod
 })
 export class GoalsComponent implements OnInit {
   private goalSvc = inject(GoalService);
+  private characterPopup = inject(CharacterPopupService);
 
   goals: FinancialGoal[] = [];
   suggestions: InvestmentSuggestions | null = null;
@@ -202,7 +204,10 @@ export class GoalsComponent implements OnInit {
     const amount = parseFloat(prompt('Valor do aporte (R$):') ?? '0');
     if (amount > 0) {
       this.goalSvc.addContribution(goal.id, amount, new Date().toISOString().split('T')[0])
-        .subscribe(() => this.loadGoals());
+        .subscribe(() => {
+          this.loadGoals();
+          this.characterPopup.showRalphao(amount, goal.name);
+        });
     }
   }
 

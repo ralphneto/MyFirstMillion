@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { TransactionService } from '../../core/services/transaction.service';
 import { AccountService } from '../../core/services/account.service';
+import { CharacterPopupService } from '../../core/services/character-popup.service';
 import { Transaction, TransactionType, PaymentMethod } from '../../core/models/transaction.model';
 import { Account } from '../../core/models/account.model';
 import { HttpClient } from '@angular/common/http';
@@ -171,6 +172,7 @@ interface CategoryOption { id: number; name: string; icon: string; color: string
 export class TransactionsComponent implements OnInit {
   private txSvc = inject(TransactionService);
   private accountSvc = inject(AccountService);
+  private characterPopup = inject(CharacterPopupService);
   private http = inject(HttpClient);
 
   transactions: Transaction[] = [];
@@ -226,11 +228,12 @@ export class TransactionsComponent implements OnInit {
   }
 
   save() {
+    const { type, amount } = this.form;
     this.txSvc.create({
       accountId: this.form.accountId,
       categoryId: this.form.categoryId,
-      amount: this.form.amount,
-      type: this.form.type,
+      amount,
+      type,
       date: this.form.date,
       description: this.form.description,
       notes: this.form.notes,
@@ -238,6 +241,7 @@ export class TransactionsComponent implements OnInit {
     }).subscribe(() => {
       this.showForm.set(false);
       this.load();
+      this.characterPopup.triggerForTransaction(type, amount);
     });
   }
 

@@ -31,26 +31,15 @@ import { MatIconModule } from '@angular/material/icon';
           </div>
         </div>
         <div class="hero-visual">
-          <div class="stat-card">
-            <mat-icon class="stat-icon income">trending_up</mat-icon>
-            <div>
-              <div class="stat-label">Receita do Mês</div>
-              <div class="stat-value income">R$ 8.500,00</div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <mat-icon class="stat-icon expense">trending_down</mat-icon>
-            <div>
-              <div class="stat-label">Despesas do Mês</div>
-              <div class="stat-value expense">R$ 3.200,00</div>
-            </div>
-          </div>
-          <div class="stat-card goal">
-            <mat-icon class="stat-icon goal-icon">emoji_events</mat-icon>
-            <div>
-              <div class="stat-label">Progresso: 1° Milhão</div>
-              <div class="stat-value goal-val">32% • 8 anos</div>
-            </div>
+          <img
+            src="assets/characters/ralphao-amelinha.jpeg"
+            alt="Ralphão, O Econômico e Amélinha, A Consumista"
+            class="characters-img"
+          />
+          <div class="characters-caption">
+            <span class="cap-ralphao">💰 Ralphão, O Econômico</span>
+            <span class="cap-vs">vs</span>
+            <span class="cap-amelinha">🛍️ Amélinha, A Consumista</span>
           </div>
         </div>
       </section>
@@ -93,23 +82,20 @@ import { MatIconModule } from '@angular/material/icon';
     .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
     .cta-btn { padding: 0 28px; height: 48px; font-size: 16px; }
 
-    .hero-visual { display: flex; flex-direction: column; gap: 16px; }
-    .stat-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
-      padding: 20px;
-      display: flex; align-items: center; gap: 16px;
+    .hero-visual { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .characters-img {
+      width: 100%; border-radius: 20px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+      border: 2px solid rgba(255,255,255,0.1);
+      object-fit: cover; max-height: 380px;
     }
-    .stat-icon { font-size: 32px; width: 32px; height: 32px; }
-    .stat-icon.income { color: #10B981; }
-    .stat-icon.expense { color: #EF4444; }
-    .stat-icon.goal-icon { color: #F59E0B; }
-    .stat-label { font-size: 13px; color: rgba(255,255,255,0.5); }
-    .stat-value { font-size: 22px; font-weight: 700; margin-top: 2px; }
-    .stat-value.income { color: #10B981; }
-    .stat-value.expense { color: #EF4444; }
-    .stat-value.goal-val { color: #F59E0B; }
+    .characters-caption {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 14px; font-weight: 600;
+    }
+    .cap-ralphao { color: #10B981; }
+    .cap-vs { color: rgba(255,255,255,0.3); font-style: italic; }
+    .cap-amelinha { color: #F472B6; }
 
     .features { padding: 80px 48px; max-width: 1200px; margin: 0 auto; }
     .features h2 { text-align: center; font-size: 36px; font-weight: 700; margin-bottom: 48px; }

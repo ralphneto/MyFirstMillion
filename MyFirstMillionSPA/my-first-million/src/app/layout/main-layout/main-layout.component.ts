@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { TopbarComponent } from '../topbar/topbar.component';
+import { CharacterPopupComponent } from '../../shared/character-popup/character-popup.component';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [RouterOutlet, SidebarComponent, TopbarComponent],
+  imports: [RouterOutlet, SidebarComponent, TopbarComponent, CharacterPopupComponent],
   template: `
     <div class="app-shell">
       <app-sidebar />
@@ -17,6 +18,7 @@ import { TopbarComponent } from '../topbar/topbar.component';
         </main>
       </div>
     </div>
+    <app-character-popup />
   `,
   styles: [`
     .app-shell {
